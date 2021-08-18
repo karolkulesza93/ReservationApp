@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using API.Models;
 
 namespace API.Services
 {
     public interface IFloorService
     {
-        IEnumerable<FloorDto> GetAllFloors();
-        FloorDto GetFloor(int id);
-        int AddFloor(FloorCreateDto floor);
-        bool UpdateFloor(FloorUpdateDto floor, int id);
-        bool DeleteFloor(int id);
+        Task<IEnumerable<FloorDto>> GetAllFloors();
+        Task<FloorDto> GetFloor(int id);
+        Task<int> AddFloor(FloorCreateDto dto);
+        Task UpdateFloor(FloorUpdateDto dto, int id);
+        Task DeleteFloor(int id);
     }
 }

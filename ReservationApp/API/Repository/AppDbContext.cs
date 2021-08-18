@@ -1,4 +1,7 @@
-﻿using API.BuilderConfigurations;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using API.BuilderConfigurations;
 using API.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,6 +10,7 @@ namespace API.Repository
     public class AppDbContext : DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
         public DbSet<Floor> Floors { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Seat> Seats { get; set; }
@@ -22,19 +26,88 @@ namespace API.Repository
             modelBuilder.ApplyConfiguration(new SeatConfiguration());
             modelBuilder.ApplyConfiguration(new ReservationConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
-            SeedDb(modelBuilder);
+            Seed(modelBuilder);
         }
 
-        private void SeedDb(ModelBuilder builder)
+        private void Seed(ModelBuilder builder)
         {
-            builder.Entity<User>().HasData(
+            SeedRoles(builder);
+            SeedUsers(builder);
+            SeedFloors(builder);
+            SeedRooms(builder);
+            SeedSeats(builder);
+            SeedReservations(builder);
+        }
+
+        private void SeedRoles(ModelBuilder builder)
+        {
+                    builder.Entity<Role>().HasData(GetRoles());
+        }
+        private void SeedUsers(ModelBuilder builder)
+        {
+                    builder.Entity<User>().HasData(GetUsers());
+        }
+        private void SeedFloors(ModelBuilder builder)
+        {
+                builder.Entity<Floor>().HasData(GetFloors());
+        }
+        private void SeedRooms(ModelBuilder builder)
+        {
+                builder.Entity<Room>().HasData(GetRooms());
+        }
+        private void SeedSeats(ModelBuilder builder)
+        {
+                builder.Entity<Seat>().HasData(GetSeats());
+        }
+        private void SeedReservations(ModelBuilder builder)
+        {
+                builder.Entity<Reservation>().HasData(GetReservations());
+        }
+
+        private IEnumerable<Role> GetRoles()
+        {
+            return new List<Role>()
+            {
+                new Role()
+                {
+                    Id = 1,
+                    Name = "User"
+                },
+                new Role()
+                {
+                    Id = 2,
+                    Name = "Admin"
+                }
+            };
+        }
+        private IEnumerable<User> GetUsers()
+        {
+            return new List<User>()
+            {
                 new User()
                 {
                     Id = 1,
-                    Name = "Admin"
+                    UserName = "logged_user",
+                    FirstName = "Ędward",
+                    LastName = "Ącki",
+                    PasswordHash = "qaz123",
+                    RoleId = 1
+                },
+                new User()
+                {
+                    Id = 2,
+                    UserName = "ADMIN",
+                    FirstName = "Karol",
+                    LastName = "Kulesza",
+                    PasswordHash = "qaz123",
+                    RoleId = 2
                 }
-            );
-            builder.Entity<Floor>().HasData(
+            };
+        }
+        private IEnumerable<Floor> GetFloors()
+        {
+            return new List<Floor>()
+            {
                 new Floor()
                 {
                     Id = 1,
@@ -53,8 +126,12 @@ namespace API.Repository
                     Number = 2,
                     Name = "Piętro 2"
                 }
-            );
-            builder.Entity<Room>().HasData(
+            };
+        }
+        private IEnumerable<Room> GetRooms()
+        {
+            return new List<Room>()
+            {
                 new Room()
                 {
                     Id = 1,
@@ -87,8 +164,12 @@ namespace API.Repository
                     Description = "Tylko dla informatyków",
                     FloorId = 3
                 }
-            );
-            builder.Entity<Seat>().HasData(
+            };
+        }
+        private IEnumerable<Seat> GetSeats()
+        {
+            return new List<Seat>()
+            {
                 new Seat()
                 {
                     Id = 1,
@@ -131,7 +212,11 @@ namespace API.Repository
                     Description = null,
                     RoomId = 4
                 }
-            );
+            };
+        }
+        private IEnumerable<Reservation> GetReservations()
+        {
+            return new List<Reservation>();
         }
     }
 }

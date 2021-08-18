@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using API.Models;
 
 namespace API.Entities
 {
@@ -14,6 +15,12 @@ namespace API.Entities
         public string FullInfo
         {
             get => $"{Name} ({Description.ToLower()})";
+        }
+
+        public void UpdateSeat(SeatUpdateDto dto)
+        {
+            Name = dto.Name;
+            Description = dto.Description;
         }
     }
 }

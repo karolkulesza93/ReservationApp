@@ -19,10 +19,6 @@ namespace API.BuilderConfigurations
             builder.Property(r => r.Description)
                 .HasMaxLength(200);
 
-            builder.HasOne(r => r.Floor)
-                .WithMany(f => f.Rooms)
-                .HasForeignKey(r => r.FloorId)
-                .OnDelete(DeleteBehavior.Restrict);
             builder.HasMany(r => r.Seats)
                 .WithOne(s => s.Room)
                 .HasForeignKey(s => s.RoomId)

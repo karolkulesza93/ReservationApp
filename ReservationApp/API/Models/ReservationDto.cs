@@ -9,8 +9,6 @@ namespace API.Models
         public string Description { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
-        public int UserId { get; set; }
-        public int SeatId { get; set; }
         public string RoomName { get; set; }
         public string SeatName { get; set; }
         public string UserName { get; set; }

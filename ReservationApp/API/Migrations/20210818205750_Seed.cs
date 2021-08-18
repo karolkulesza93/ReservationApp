@@ -2,7 +2,7 @@
 
 namespace API.Migrations
 {
-    public partial class Seeding : Migration
+    public partial class Seed : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,9 +17,13 @@ namespace API.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Users",
+                table: "Roles",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { 1, "Admin" });
+                values: new object[,]
+                {
+                    { 1, "User" },
+                    { 2, "Admin" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Rooms",
@@ -30,6 +34,15 @@ namespace API.Migrations
                     { 2, "Do pracy", 2, "Pokój komputerowy", 101 },
                     { 3, "Do konferencji", 2, "Sala konferencyjna", 102 },
                     { 4, "Tylko dla informatyków", 3, "Serwerownia", 201 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Email", "FirstName", "LastName", "PasswordHash", "RoleId", "UserName" },
+                values: new object[,]
+                {
+                    { 1, null, "Ędward", "Ącki", "qaz123", 1, "logged_user" },
+                    { 2, null, "Karol", "Kulesza", "qaz123", 2, "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
@@ -82,6 +95,21 @@ namespace API.Migrations
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "Users",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "Roles",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "Roles",
+                keyColumn: "Id",
+                keyValue: 2);
 
             migrationBuilder.DeleteData(
                 table: "Rooms",

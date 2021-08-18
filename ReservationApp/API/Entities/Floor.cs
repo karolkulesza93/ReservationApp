@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using API.Models;
 
 namespace API.Entities
 {
@@ -12,6 +13,12 @@ namespace API.Entities
         public string FullInfo
         {
             get => $"{Name} ({Number})";
+        }
+
+        public void UpdateFloor(FloorUpdateDto dto)
+        {
+            Name = dto.Name;
+            Number = dto.Number;
         }
     }
 }

@@ -21,15 +21,6 @@ namespace API.BuilderConfigurations
                 .IsRequired();
             builder.Property(r => r.End)
                 .IsRequired();
-
-            builder.HasOne(r => r.Seat)
-                .WithMany(s => s.Reservations)
-                .HasForeignKey(r => r.SeatId)
-                .OnDelete(DeleteBehavior.Restrict);
-            builder.HasOne(r => r.User)
-                .WithMany(u => u.Reservations)
-                .HasForeignKey(r => r.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
